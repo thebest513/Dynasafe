@@ -46,11 +46,13 @@ Follow Kubernetes official website to install kubectl https://kubernetes.io/docs
 [vagrant@rocky9 ~]$ sudo /usr/local/bin/kind get clusters
 kind
 
+
 [vagrant@rocky9 ~]$ sudo /usr/local/bin/kubectl cluster-info
 Kubernetes control plane is running at https://127.0.0.1:35099
 CoreDNS is running at https://127.0.0.1:35099/api/v1/namespaces/kube-system/services/kube-dns:dns/proxy
 
 To further debug and diagnose cluster problems, use 'kubectl cluster-info dump'.
+
 
 [vagrant@rocky9 ~]$ sudo /usr/local/bin/kubectl get nodes
 NAME                 STATUS   ROLES           AGE   VERSION
