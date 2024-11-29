@@ -51,6 +51,13 @@ Kubernetes control plane is running at https://127.0.0.1:35099
 CoreDNS is running at https://127.0.0.1:35099/api/v1/namespaces/kube-system/services/kube-dns:dns/proxy
 
 To further debug and diagnose cluster problems, use 'kubectl cluster-info dump'.
+
+[vagrant@rocky9 ~]$ sudo /usr/local/bin/kubectl get nodes
+NAME                 STATUS   ROLES           AGE   VERSION
+kind-control-plane   Ready    control-plane   19m   v1.31.2
+kind-worker          Ready    <none>          10m   v1.31.2
+kind-worker2         Ready    <none>          10m   v1.31.2
+kind-worker3         Ready    <none>          10m   v1.31.2
 ```
 
 2. 節點分為2群角色或功能:
