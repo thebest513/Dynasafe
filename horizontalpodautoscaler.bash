@@ -1,0 +1,1 @@
+sudo kubectl autoscale deployment deployment-on-app-node --cpu-percent=50 --max=10
