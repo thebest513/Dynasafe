@@ -119,19 +119,14 @@ replicaset.apps/speaker-7ff6d8c7b4      1         1         1       14m   speake
 * Helm -- follow Helm official website for installation https://helm.sh/docs/intro/install/
 
 ## Instructions
+https://github.com/prometheus-community/helm-charts/tree/main/charts/kube-prometheus-stack
+   > Installs the kube-prometheus stack, a collection of Kubernetes manifests, Grafana dashboards, and Prometheus rules combined with documentation and scripts to provide easy to operate end-to-end Kubernetes cluster monitoring with Prometheus using the Prometheus Operator.
 
-* Install Prometheus in the cluster using Helm
-  https://github.com/prometheus-community/helm-charts/tree/main/charts/prometheus
+* Install Prometheus, kube-state-metrics, and node exporter in the cluster using Helm
 ```bash
 sudo helm install prometheus prometheus-community/kube-prometheus-stack --set prometheus.nodeSelector.node-role.kubernetes.io=infra --set kubeStateMetrics.nodeSelector.node-role.kubernetes.io=infra -n prometheus
 ```
-* Install kube-state-metrics in the cluster using Helm
-  https://github.com/prometheus-community/helm-charts/tree/main/charts/kube-state-metrics
-```bash
-sudo helm install kube-state-metrics prometheus-community/kube-prometheus-stack --set prometheus.nodeSelector.node-role.kubernetes.io=infra --set kubeStateMetrics.nodeSelector.node-role.kubernetes.io=infra -n prometheus
-```
-* Install node exporter in the cluster using Helm
-https://github.com/prometheus-community/helm-charts/tree/main/charts/prometheus-node-exporter
+
 * Create Prometheus configuration file - prometheus.yml to collect metrics from node_exporter and from kube-state-metrics
 code snippet
 ```bash
