@@ -119,41 +119,19 @@ replicaset.apps/speaker-7ff6d8c7b4      1         1         1       14m   speake
 * Helm -- follow Helm official website for installation https://helm.sh/docs/intro/install/
 
 ## Instructions
-* Install Prometheus using Docker https://hub.docker.com/r/prom/prometheus/
-* Install node-exporter on Docker https://hub.docker.com/r/prom/node-exporter
-   > The node_exporter is designed to monitor the host system. Deploying in containers requires extra care in order to avoid monitoring the container itself.
-* Create compose.yaml to for prometheus service and node_exporter service
-* docker compose up to start prometheus service and node_exporter service
+
+* Install Prometheus in the cluster using Helm
+  https://github.com/prometheus-community/helm-charts/tree/main/charts/prometheus
 ```bash
-version: '3'
-services:
-  prometheus:
-    image: prom/prometheus
-    volumes:
-      - ./prometheus.yml:/etc/prometheus/prometheus.yml
-    command:
-      - '--config.file=/etc/prometheus/prometheus.yml'
-    restart: unless-stopped
-    ports:
-      - 9090:9090
-  node-exporter:
-    image: prom/node-exporter
-    volumes:
-      - /proc:/host/proc:ro
-      - /sys:/host/sys:ro
-      - /:/rootfs:ro
-    command:
-      - '--path.procfs=/host/proc'
-      - '--path.sysfs=/host/sys'
-      - '--path.rootfs=/rootfs'
-      - '--collector.filesystem.ignored-mount-points=^/(sys|proc|dev|host|etc)($$|/)'
-    restart: unless-stopped
-    ports:
-      - 9100:9100
+sudo helm install prometheus prometheus-community/kube-prometheus-stack --set prometheus.nodeSelector.node-role.kubernetes.io=infra --set kubeStateMetrics.nodeSelector.node-role.kubernetes.io=infra -n prometheus
 ```
-
 * Install kube-state-metrics in the cluster using Helm
-
+  https://github.com/prometheus-community/helm-charts/tree/main/charts/kube-state-metrics
+```bash
+sudo helm install kube-state-metrics prometheus-community/kube-prometheus-stack --set prometheus.nodeSelector.node-role.kubernetes.io=infra --set kubeStateMetrics.nodeSelector.node-role.kubernetes.io=infra -n prometheus
+```
+* Install node exporter in the cluster using Helm
+https://github.com/prometheus-community/helm-charts/tree/main/charts/prometheus-node-exporter
 * Create Prometheus configuration file - prometheus.yml to collect metrics from node_exporter and from kube-state-metrics
 code snippet
 ```bash
